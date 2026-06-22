@@ -14,6 +14,7 @@ button {
 :root {
   --hope-blue: #3f5cf4;
   --hope-blue-2: #566df5;
+  --app-font-size: 16px;
   --ink: #071033;
   --muted: #8d98ad;
   --soft: #f7f8fb;
@@ -200,6 +201,7 @@ button {
 .content-shell {
   flex: 1;
   min-width: 0;
+  font-size: var(--app-font-size);
 }
 
 .topbar {
@@ -238,7 +240,12 @@ button {
   gap: 30px;
 }
 
-.top-nav a {
+.top-dropdown {
+  height: 64px;
+  position: relative;
+}
+
+.top-dropdown > a {
   height: 64px;
   display: flex;
   align-items: center;
@@ -248,9 +255,57 @@ button {
   border-bottom: 3px solid transparent;
 }
 
-.top-nav a.active {
+.top-dropdown > a.active,
+.top-dropdown:hover > a,
+.top-dropdown:focus-within > a {
   color: var(--hope-blue);
   border-bottom-color: var(--hope-blue);
+}
+
+.dropdown-menu {
+  min-width: 210px;
+  position: absolute;
+  left: -18px;
+  top: 64px;
+  padding: 10px 0;
+  border-radius: 0 0 6px 6px;
+  background: #fff;
+  box-shadow: 0 18px 42px rgba(31, 45, 91, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+}
+
+.top-dropdown:hover .dropdown-menu,
+.top-dropdown:focus-within .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu a {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 0 18px;
+  color: #8b94a7;
+  font-size: 16px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.dropdown-menu a:hover {
+  color: var(--hope-blue);
+  background: #f8f9ff;
+}
+
+.dropdown-menu svg {
+  width: 16px;
+  height: 16px;
+  color: #9da6b7;
 }
 
 .top-actions {
@@ -262,19 +317,27 @@ button {
   color: #5b6271;
 }
 
-.font-switch strong {
+.font-button {
   width: 40px;
   height: 40px;
   display: grid;
   place-items: center;
-  border-radius: 4px;
-  background: var(--hope-blue);
-  color: #fff;
-  font-size: 23px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-.font-switch b {
-  font-size: 28px;
+.font-button.active {
+  background: var(--hope-blue);
+  color: #fff;
+}
+
+.font-button:hover {
+  background: rgba(63,92,244,0.1);
+}
+
+.font-button.active:hover {
+  background: var(--hope-blue);
 }
 
 .search-box {
@@ -299,6 +362,22 @@ button {
 
 .main-content {
   padding: 32px;
+  font-size: var(--app-font-size);
+}
+
+.main-content p,
+.main-content span,
+.main-content a,
+.main-content button,
+.main-content strong,
+.main-content td,
+.main-content th,
+.main-content li {
+  font-size: var(--app-font-size);
+}
+
+.app-container :where(h1, h2, h3, h4, p, span, a, button, strong, em, label, input, li, div, text) {
+  font-size: var(--app-font-size);
 }
 
 .page-title,
@@ -824,6 +903,11 @@ button {
   border-radius: 4px 0 0 4px;
   background: #ff6b1a;
   color: #fff;
+  font-size: 0;
+}
+
+.floating-cog::before {
+  content: "\2699";
   font-size: 21px;
 }
 
@@ -905,5 +989,377 @@ button {
     flex-direction: column;
     align-items: flex-start;
     padding: 18px;
+  }
+}
+
+@media (max-width: 1440px) {
+  .sidebar {
+    width: 240px;
+    min-width: 240px;
+  }
+
+  .topbar {
+    padding-inline: 24px;
+    gap: 16px;
+  }
+
+  .top-nav {
+    display: flex;
+    gap: 20px;
+  }
+
+  .main-content {
+    padding: 28px;
+  }
+
+  .dashboard-page {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+    gap: 28px;
+  }
+
+  .folder-grid {
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+    gap: 48px 24px;
+  }
+
+  .image-grid {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 26px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .app-container {
+    display: block;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    position: relative;
+    overflow: visible;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .profile-card {
+    display: none;
+  }
+
+  .sidebar-nav {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    padding: 12px 18px;
+  }
+
+  .nav-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    flex: 0 0 auto;
+  }
+
+  .nav-title {
+    padding: 0;
+    letter-spacing: 3px;
+    white-space: nowrap;
+  }
+
+  .sidebar-nav ul {
+    display: flex;
+    gap: 8px;
+  }
+
+  .nav-link {
+    height: 40px;
+    gap: 10px;
+    padding: 0 14px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+
+  .nav-link.active {
+    background: #eef2ff;
+  }
+
+  .nav-link.active::before {
+    display: none;
+  }
+
+  .topbar {
+    position: sticky;
+    height: auto;
+    min-height: 64px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 12px 20px;
+  }
+
+  .search-box,
+  .font-switch {
+    display: flex;
+  }
+
+  .top-left,
+  .top-actions {
+    min-width: 0;
+    flex: 1 1 420px;
+  }
+
+  .top-actions {
+    justify-content: flex-end;
+  }
+
+  .top-nav {
+    display: flex;
+    max-width: 100%;
+    gap: 18px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .top-nav::-webkit-scrollbar,
+  .sidebar-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .top-dropdown,
+  .top-dropdown > a {
+    height: 44px;
+  }
+
+  .top-dropdown > a {
+    border-bottom-width: 2px;
+    white-space: nowrap;
+  }
+
+  .dropdown-menu {
+    top: 44px;
+  }
+
+  .dashboard-page {
+    grid-template-columns: 1fr;
+  }
+
+  .storage-card {
+    max-width: none;
+  }
+
+  .chart-card,
+  .upload-card,
+  .recent-files,
+  .cloud-card,
+  .offer-card {
+    width: 100%;
+  }
+
+  .offer-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 820px) {
+  .top-left,
+  .top-actions {
+    flex-basis: 100%;
+  }
+
+  .top-actions {
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .font-switch {
+    display: flex;
+  }
+
+  .search-box {
+    flex: 1 1 180px;
+    width: auto;
+    min-width: 160px;
+  }
+
+  .round-actions {
+    gap: 8px;
+  }
+
+  .main-content {
+    padding: 20px 16px;
+  }
+
+  .image-page-head {
+    margin: -20px -16px 22px;
+    padding: 12px 16px;
+    gap: 14px;
+  }
+
+  .folder-grid,
+  .image-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 16px;
+  }
+
+  .dashboard-page > * {
+    margin-bottom: 24px;
+  }
+
+  .chart-wrap svg {
+    height: 280px;
+  }
+
+  .upload-row {
+    grid-template-columns: minmax(120px, 1fr) minmax(80px, 120px) 52px 18px;
+  }
+
+  .file-table-head {
+    display: none;
+  }
+
+  .file-row {
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    padding: 14px 18px;
+  }
+
+  .file-row > span:not(.soft-icon),
+  .file-row a {
+    grid-column: 2;
+  }
+
+  .trash-icon {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+  }
+
+  .floating-tab,
+  .floating-cog {
+    display: none;
+  }
+
+  .app-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --app-font-size: 14px;
+  }
+
+  .brand {
+    height: 58px;
+  }
+
+  .brand h3 {
+    font-size: 22px;
+  }
+
+  .sidebar-nav {
+    padding: 10px 12px;
+  }
+
+  .nav-title,
+  .breadcrumb-current {
+    display: none;
+  }
+
+  .topbar {
+    padding: 10px 12px;
+  }
+
+  .top-left {
+    gap: 10px;
+  }
+
+  .top-nav {
+    gap: 12px;
+  }
+
+  .top-dropdown > a {
+    gap: 6px;
+  }
+
+  .dropdown-menu {
+    left: -8px;
+    min-width: 180px;
+  }
+
+  .font-switch {
+    gap: 6px;
+  }
+
+  .font-button {
+    width: 34px;
+    height: 34px;
+  }
+
+  .round-actions button,
+  .round-back {
+    width: 32px;
+    height: 32px;
+  }
+
+  .search-box {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .folder-grid,
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .folder-card {
+    min-height: 140px;
+  }
+
+  .storage-row {
+    grid-template-columns: 44px 1fr;
+  }
+
+  .storage-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .gauge-ring {
+    transform: scale(0.86);
+  }
+
+  .image-page-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .image-page-head button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .upload-row {
+    grid-template-columns: minmax(0, 1fr) 18px;
+    gap: 8px;
+  }
+
+  .upload-row .mini-progress,
+  .upload-row strong {
+    grid-column: 1;
+  }
+
+  .upload-row button {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .app-footer div {
+    flex-wrap: wrap;
   }
 }

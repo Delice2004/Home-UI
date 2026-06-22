@@ -1,7 +1,7 @@
 import React from 'react'
-import Sidebar from './Sidebar'
-import Navbar from './Navbar'
 import { Outlet } from 'react-router-dom'
+import Navbar from './Navbar'
+import Sidebar from './Sidebar'
 
 export default function AppLayout() {
   return (
@@ -17,11 +17,11 @@ export default function AppLayout() {
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Use</a>
           </div>
-          <p>© Hope UI, Made with ♥ by <a href="#">IQONIC Design.</a></p>
+          <p>(c) Hope UI, Made with love by <a href="#">IQONIC Design.</a></p>
         </footer>
       </div>
-      <div className="floating-tab buy-tab">▣ Buy Now</div>
-      <button className="floating-cog">⚙</button>
+      <div className="floating-tab buy-tab">Buy Now</div>
+      <button className="floating-cog" aria-label="Settings">Settings</button>
       <div className="floating-tab landing-tab">Landing Pages</div>
     </div>
   )
